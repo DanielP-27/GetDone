@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Home"
+        android:icon="@drawable/ic_homenb"
+        android:id="@+id/menu_home"/>
+
+    <item android:title="Tareas"
+        android:icon="@drawable/ic_list1nb"
+        android:id="@+id/menu_tareas"/>
+
+    <item android:title="Calendario"
+        android:icon="@drawable/ic_calendarnbg2"
+        android:id="@+id/menu_calendario"/>
+
+    <item android:title="Configuracion"
+        android:icon="@drawable/ic_settingsnb"
+        android:id="@+id/menu_configuracion"/>
+
+</menu>
