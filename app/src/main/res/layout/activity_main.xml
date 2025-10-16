@@ -28,10 +28,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="46dp"
+        android:layout_marginBottom="30dp"
         android:backgroundTint="#D16201"
-        android:text="+ nueva tarea"
         android:onClick="ir_nueva_tarea"
+        android:text="+ nueva tarea"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/card_actividades1"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,13 +40,15 @@
     <LinearLayout
         android:id="@+id/card_actividades1"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="21dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="21dp"
         android:layout_marginBottom="172dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/menu_navegacion"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nueva_tarea">
 
@@ -157,7 +159,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             app:cardBackgroundColor="#5F716565">
 
             <LinearLayout
@@ -223,6 +225,19 @@
         app:menu="@menu/bottom_menu">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    <TextView
+        android:id="@+id/proximo_vencer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:text="Tareas proximas a vencerce"
+        android:textColor="#D16201"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/card_actividades1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

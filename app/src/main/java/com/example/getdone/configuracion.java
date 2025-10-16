@@ -1,35 +1,188 @@
 package com.example.getdone;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 public class configuracion extends AppCompatActivity {
+
+    private static final String CHANNEL_ID = "getDone_canal";
+    private static final int NOTIFICATION_ID = 5;
+    private static final int REQUEST_NOTIFICATION_PERMISSION = 100;
+
+    Switch switch_notificaciones;
+    private boolean intentoNotificacionPendiente = false;
+    private boolean esActivacion = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_configuracion);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        // Solicitar permisos para Android 13+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
+                        REQUEST_NOTIFICATION_PERMISSION);
+            }
+        }
+
+        // Vincular el Switch
+        switch_notificaciones = findViewById(R.id.configuracion_notificacion);
+
+        // Listener para detectar cambios en el Switch
+        switch_notificaciones.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Verificar si tenemos permisos antes de mostrar notificación
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    if (ContextCompat.checkSelfPermission(configuracion.this,
+                            android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+
+                        // Guardar el estado para mostrarlo después de conceder permiso
+                        intentoNotificacionPendiente = true;
+                        esActivacion = isChecked;
+
+                        // Solicitar permiso
+                        ActivityCompat.requestPermissions(configuracion.this,
+                                new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
+                                REQUEST_NOTIFICATION_PERMISSION);
+                        return;
+                    }
+                }
+
+                // Si tenemos permisos o es Android < 13, mostrar notificación directamente
+                if (isChecked) {
+                    mostrarNotificacionActivada();
+                } else {
+                    mostrarNotificacionDesactivada();
+                }
+            }
         });
     }
 
-    public void data_actualizada (View v) {
-       Toast.makeText(this, "Datos actualizados de forma correcta", Toast.LENGTH_LONG).show();
+    // Callback para manejar respuesta de permisos
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permiso concedido
+                Toast.makeText(this, "✅ Permisos de notificación concedidos", Toast.LENGTH_SHORT).show();
+
+                // Si había un intento pendiente, ejecutarlo ahora
+                if (intentoNotificacionPendiente) {
+                    if (esActivacion) {
+                        mostrarNotificacionActivada();
+                    } else {
+                        mostrarNotificacionDesactivada();
+                    }
+                    intentoNotificacionPendiente = false;
+                }
+            } else {
+                // Permiso denegado
+                Toast.makeText(this, "⚠️ Permisos denegados. No se pueden mostrar notificaciones.\n" +
+                                "Habilítalos en: Ajustes > Apps > GetDone > Notificaciones",
+                        Toast.LENGTH_LONG).show();
+
+                // Resetear el switch a su posición anterior
+                if (switch_notificaciones != null) {
+                    switch_notificaciones.setChecked(!esActivacion);
+                }
+
+                intentoNotificacionPendiente = false;
+            }
+        }
     }
 
-    public void volver_activity_main (View v) {
+    // Método para notificación cuando se activa
+    private void mostrarNotificacionActivada() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (notificationManager == null) {
+            Toast.makeText(this, "Error: No se pudo acceder al servicio de notificaciones", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Crear canal para Android 8+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "Canal getDone",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+            channel.setDescription("Notificaciones de estado de GetDone");
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        // Construir notificación expandible
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.getdonenb1)
+                .setContentTitle("Notificaciones Activadas")
+                .setContentText("Las notificaciones están ahora activas")
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("Has activado las notificaciones de GetDone. Recibirás alertas sobre tus tareas y recordatorios importantes."))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+    }
+
+    // Método para notificación cuando se desactiva
+    private void mostrarNotificacionDesactivada() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (notificationManager == null) {
+            Toast.makeText(this, "Error: No se pudo acceder al servicio de notificaciones", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Crear canal para Android 8+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "Canal getDone",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+            channel.setDescription("Notificaciones de estado de GetDone");
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        // Construir notificación expandible
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.getdonenb1)
+                .setContentTitle("Notificaciones Desactivadas")
+                .setContentText("Las notificaciones están ahora inactivas")
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("Has desactivado las notificaciones de GetDone. No recibirás alertas hasta que las vuelvas a activar."))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+    }
+
+    public void data_actualizada(View v) {
+        Toast.makeText(this, "Datos actualizados de forma correcta", Toast.LENGTH_LONG).show();
+    }
+
+    public void volver_activity_main(View v) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
