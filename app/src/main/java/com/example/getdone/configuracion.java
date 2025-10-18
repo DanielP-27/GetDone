@@ -19,7 +19,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 public class configuracion extends AppCompatActivity {
-
+    //Creación del canal de notificaciones
     private static final String CHANNEL_ID = "getDone_canal";
     private static final int NOTIFICATION_ID = 5;
     private static final int REQUEST_NOTIFICATION_PERMISSION = 100;
@@ -32,8 +32,9 @@ public class configuracion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracion);
+        bottomMenu.configurar(this, R.id.menu_configuracion);
 
-        // Solicitar permisos para Android 13+
+        // Esta parte del código es necesaria para la solicitud de permisos al dispositivo aplica posterior a Android Tiramisu (13)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
                     != PackageManager.PERMISSION_GRANTED) {
@@ -43,7 +44,7 @@ public class configuracion extends AppCompatActivity {
             }
         }
 
-        // Vincular el Switch
+        // Esta es la conexión con el switch que se encuentra en activity_configuracion.xml
         switch_notificaciones = findViewById(R.id.configuracion_notificacion);
 
         // Listener para detectar cambios en el Switch
@@ -77,7 +78,8 @@ public class configuracion extends AppCompatActivity {
         });
     }
 
-    // Callback para manejar respuesta de permisos
+    // Callback para manejar respuesta de permisos, dependiendo de si el usuario otorga lo permisos o no, se mostrará
+    // el primer mensaje (si concede permisos) o el segundo (en caso que el usuario no los conceda)
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -86,19 +88,9 @@ public class configuracion extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permiso concedido
                 Toast.makeText(this, "✅ Permisos de notificación concedidos", Toast.LENGTH_SHORT).show();
-
-                // Si había un intento pendiente, ejecutarlo ahora
-                if (intentoNotificacionPendiente) {
-                    if (esActivacion) {
-                        mostrarNotificacionActivada();
-                    } else {
-                        mostrarNotificacionDesactivada();
-                    }
-                    intentoNotificacionPendiente = false;
-                }
             } else {
                 // Permiso denegado
-                Toast.makeText(this, "⚠️ Permisos denegados. No se pueden mostrar notificaciones.\n" +
+                Toast.makeText(this, "⚠️ Permisos denegados.\n" +
                                 "Habilítalos en: Ajustes > Apps > GetDone > Notificaciones",
                         Toast.LENGTH_LONG).show();
 
@@ -112,7 +104,8 @@ public class configuracion extends AppCompatActivity {
         }
     }
 
-    // Método para notificación cuando se activa
+    // Si obtenemos permiso por parte del usuario este es el metodo que se activa cuando el usuario activa
+    // las notificaciones a través del switch que se encuentra en activity_configuracion.xml
     private void mostrarNotificacionActivada() {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -132,20 +125,20 @@ public class configuracion extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
 
-        // Construir notificación expandible
+        // Construir notificación expandible, a través del elemento NotificationCompact de material design de Google.
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.getdonenb1)
                 .setContentTitle("Notificaciones Activadas")
                 .setContentText("Las notificaciones están ahora activas")
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("Has activado las notificaciones de GetDone. Recibirás alertas sobre tus tareas y recordatorios importantes."))
+                        .bigText("Has activado las notificaciones de GetDone. \nRecibirás alertas sobre tus tareas y recordatorios importantes."))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 
-    // Método para notificación cuando se desactiva
+    // Este es el metodo que se activa en el evento que el usuario apague el swicth y por lo tanto, desactiva las notificaciones.
     private void mostrarNotificacionDesactivada() {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -165,19 +158,20 @@ public class configuracion extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
 
-        // Construir notificación expandible
+        // Construir notificación expandible, en esta caso cuando se desactivan las notificaciones, elemento NotificationCompact
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.getdonenb1)
                 .setContentTitle("Notificaciones Desactivadas")
                 .setContentText("Las notificaciones están ahora inactivas")
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("Has desactivado las notificaciones de GetDone. No recibirás alertas hasta que las vuelvas a activar."))
+                        .bigText("Has desactivado las notificaciones de GetDone. \nNo recibirás alertas hasta que las vuelvas a activar."))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 
+    // metodos relacionados con los botones crear tarea
     public void data_actualizada(View v) {
         Toast.makeText(this, "Datos actualizados de forma correcta", Toast.LENGTH_LONG).show();
     }

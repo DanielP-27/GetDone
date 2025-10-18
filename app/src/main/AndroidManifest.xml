@@ -18,9 +18,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GetDone">
         <activity
-            android:name=".ImagenesActivity"
-            android:exported="false" />
-        <activity
             android:name=".allTareas"
             android:exported="true" />
         <activity
