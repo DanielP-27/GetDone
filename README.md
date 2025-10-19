@@ -1,1 +1,2 @@
 # GetDone
+# Este proyecto corresponde al desarrollo de un aplicación para la materia Desarrollo de Aplicaciones para Moviles de la Universidad Nacional Abierta y a Disctancia (UNAD) de Colombia, en el mismo se realiza una propuesta de aplicación para dispositivos moviles Android utilizando para ello XML como lenguaje de marcado y Java como lenguaje base de programación; Kotlin es utilizando, pero en menor medida. 
