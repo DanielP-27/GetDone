@@ -13,26 +13,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="84dp"
         android:text="Nueva Actividad"
         android:textColor="#D16201"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="106dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout4"
         android:layout_width="0dp"
         android:layout_height="63dp"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="119dp"
         android:layout_marginEnd="14dp"
         android:layout_marginBottom="119dp"
         app:layout_constraintBottom_toTopOf="@+id/crear_nueva_tarea"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2">
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -48,13 +45,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="13dp"
         android:text="Descripción"
         android:textColor="#ffffff"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        tools:layout_editor_absoluteY="162dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
@@ -95,7 +91,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView7" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/TextInputLayout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
@@ -104,7 +100,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/nombre_actividad"
+            android:id="@+id/fecha_actividad"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Comprar medicina parasitos Bruno (medivet)"
@@ -112,20 +108,6 @@
             android:textSize="14sp"
             android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="0dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="43dp"
-        android:layout_marginEnd="38dp"
-        android:layout_marginBottom="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView16"
-        app:layout_constraintEnd_toStartOf="@+id/boton_agregar_archivo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView11"
-        app:srcCompat="@drawable/calendar" />
 
     <TextView
         android:id="@+id/textView16"
@@ -185,7 +167,6 @@
         android:id="@+id/menu_navegacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
         android:background="#5F101010"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
@@ -193,7 +174,6 @@
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/crear_nueva_tarea"
         app:menu="@menu/bottom_menu" />
 
     <TextView
@@ -201,13 +181,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="11dp"
         android:text="Categoria"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
+        tools:layout_editor_absoluteY="499dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout9"
@@ -238,7 +217,6 @@
         android:text="Agregar archivo"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
 
     <ImageView
@@ -251,5 +229,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView16"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_fecha"
+        android:layout_width="144dp"
+        android:layout_height="77dp"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="298dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fecha_actividad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="incluir fecha" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
