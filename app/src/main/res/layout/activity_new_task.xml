@@ -12,29 +12,34 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="106dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="14dp"
         android:text="Nueva Actividad"
         android:textColor="#D16201"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="106dp" />
+        app:layout_constraintBottom_toTopOf="@+id/textView8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout4"
         android:layout_width="0dp"
-        android:layout_height="63dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="119dp"
-        app:layout_constraintBottom_toTopOf="@+id/crear_nueva_tarea"
+        android:layout_height="60dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="27dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView29"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/prioridad_actividad"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Alta"
+            android:hint="escoga entre alta/media/baja"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -44,31 +49,33 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="7dp"
         android:text="Descripción"
         android:textColor="#ffffff"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="162dp" />
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/TextInputLayout4" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="60dp"
         android:layout_marginStart="9dp"
-        android:layout_marginTop="28dp"
         android:layout_marginEnd="9dp"
-        android:layout_marginBottom="31dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView11"
+        android:layout_marginBottom="9dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView11"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView9">
+        app:layout_constraintTop_toBottomOf="@+id/textView9">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/descripcion_actividad"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="En la veterinana del barrio no está disponible"
+            android:baselineAligned="false"
+            android:hint="Incluya una descripción de la actividad"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -79,31 +86,33 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="247dp"
-        android:layout_marginBottom="248dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginBottom="11dp"
         android:text="Fecha limite"
         android:textColor="#FBFBFB"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout9"
+        app:layout_constraintBottom_toTopOf="@+id/boton_agregar_archivo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/TextInputLayout4"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView9"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/fecha_actividad"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Comprar medicina parasitos Bruno (medivet)"
+            android:id="@+id/nombre_actividad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre la actividad"
             android:textColor="#EDE7E7"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -114,26 +123,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="63dp"
-        android:layout_marginEnd="73dp"
+        android:layout_marginBottom="11dp"
         android:text="Nivel de prioridad"
         android:textColor="#FBF7F7"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/foto_viewer"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/foto_viewer" />
+        app:layout_constraintTop_toBottomOf="@+id/foto_viewer" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginBottom="8dp"
         android:text="Nombre actividad"
         android:textColor="#FBF9F9"
         android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/TextInputLayout4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -141,26 +150,29 @@
         android:id="@+id/crear_nueva_tarea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="1dp"
         android:backgroundTint="#CE6101"
         android:onClick="nueva_tarea_creada"
         android:text="Crear tarea"
         android:textColor="#FDF9F9"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout9"
+        app:layout_constraintEnd_toStartOf="@+id/boton_cancelar_tarea"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout9" />
 
     <Button
         android:id="@+id/boton_cancelar_tarea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="46dp"
+        android:layout_marginBottom="47dp"
         android:backgroundTint="#CE6101"
         android:onClick="cancelar_nueva_tarea"
         android:text="Cancelar"
         android:textColor="#FDFBFB"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout9"
+        app:layout_constraintBottom_toTopOf="@+id/menu_navegacion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/crear_nueva_tarea"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout9" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -174,35 +186,40 @@
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boton_cancelar_tarea"
         app:menu="@menu/bottom_menu" />
 
     <TextView
         android:id="@+id/textView29"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginBottom="11dp"
         android:text="Categoria"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout9"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="499dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout9"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="137dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="9dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="39dp"
+        app:layout_constraintBottom_toTopOf="@+id/boton_cancelar_tarea"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView29">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/categoria_actividad"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Personal"
+            android:hint="escoja entre personal/academico/laboral"
             android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -210,38 +227,46 @@
         android:id="@+id/boton_agregar_archivo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="9dp"
         android:layout_marginEnd="58dp"
+        android:layout_marginBottom="13dp"
         android:backgroundTint="#CE6101"
         android:onClick="tomarFoto"
         android:text="Agregar archivo"
         android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/foto_viewer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+        app:layout_constraintStart_toEndOf="@+id/input_fecha"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <ImageView
         android:id="@+id/foto_viewer"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginEnd="76dp"
+        android:layout_width="121dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="67dp"
         android:background="#ADA69F"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView16"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/textView16"
+        app:layout_constraintEnd_toEndOf="@+id/boton_agregar_archivo"
+        app:layout_constraintTop_toBottomOf="@+id/boton_agregar_archivo" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_fecha"
-        android:layout_width="144dp"
-        android:layout_height="77dp"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="298dp">
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/boton_agregar_archivo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fecha_actividad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="incluir fecha" />
+            android:hint="formato dd/mm/aa"
+            android:textColor="@color/white"
+            android:textColorHint="#FFFFFF" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

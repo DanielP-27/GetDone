@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- NOMBRE -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre:"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginBottom="5dp" />
+
+        <EditText
+            android:id="@+id/et_editar_nombre"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Nombre de la tarea"
+            android:inputType="text"
+            android:autofillHints=""
+            android:layout_marginBottom="15dp" />
+
+        <!-- DESCRIPCIÓN -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="Descripción:"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginBottom="5dp" />
+
+        <EditText
+            android:id="@+id/et_editar_descripcion"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Descripción"
+            android:inputType="textMultiLine"
+            android:minLines="2"
+            android:autofillHints=""
+            android:layout_marginBottom="15dp" />
+
+        <!-- FECHA -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha límite:"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginBottom="5dp" />
+
+        <EditText
+            android:id="@+id/et_editar_fecha"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="DD/MM/AA"
+            android:inputType="date"
+            android:autofillHints=""
+            android:layout_marginBottom="15dp" />
+
+        <!-- PRIORIDAD -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prioridad:"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginBottom="5dp" />
+
+        <EditText
+            android:id="@+id/et_editar_prioridad"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Alta, Media, Baja"
+            android:inputType="text"
+            android:autofillHints=""
+            android:layout_marginBottom="15dp" />
+
+        <!-- CATEGORÍA -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categoría:"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginBottom="5dp" />
+
+        <EditText
+            android:id="@+id/et_editar_categoria"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Personal, Trabajo, Estudio"
+            android:inputType="text"
+            android:autofillHints="" />
+
+    </LinearLayout>
+
+</ScrollView>
