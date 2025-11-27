@@ -17,6 +17,7 @@ public class adminSqliteOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // Crear la tabla de tareas
         // Los diferentes atributos de la tabla se deben a que el metodo CREATE del CRUD se conectará con la activity y archivo java new_task; el formulario tiene campos que guardan relación con los atributos de creación de tabla
+        // Se ha buscado igualmente coherencia entre la tabla de base de datos y el análisis de requisitos de la fase 2
         db.execSQL("CREATE TABLE tareas(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "nombreActividad TEXT NOT NULL, " +
@@ -28,9 +29,9 @@ public class adminSqliteOpenHelper extends SQLiteOpenHelper {
                 "nomArchivo TEXT)");
     }
 
+    // Metodo necesario para actualizar la base de datos cada vez que se crea un nuevo registro
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Si actualizas la versión de la BD, puedes gestionar migraciones aquí
         db.execSQL("DROP TABLE IF EXISTS tareas");
         onCreate(db);
     }

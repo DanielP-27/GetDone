@@ -2,7 +2,10 @@ package com.example.getdone;
 
 import android.os.Bundle;
 
-// las siguientes importaciones son necesarias para el correcto funcionamiento de la lista tareas y por ende, de los metodos UPDATE and DELETE que se proponen desarrollar en esta activity
+// las siguientes importaciones son necesarias para el correcto funcionamiento de la lista tareas y por ende, de los metodos UPDATE and DELETE que la base roponen desarrollar en esta activity
+// las importaciones incluyen conexión con la base de datos, además de los elementos visuales necesarios para que la información se lleve desde el BackEnd hasta el FronEnd directamente desde base de datos (contenido dinamico)
+// Hasta la fase 3, esto contenido se mostraba estatico con elementos .xml con las importaciones más las clases correspondientes en este archivo, ya contamos con contenido dinámico
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -54,6 +57,7 @@ public class allTareas extends AppCompatActivity {
                 "SELECT id, nombreActividad, descripcion, fechaLimite, prioridad, categoria, completada " + "FROM tareas ORDER BY id DESC", null
         );
 
+        // este bucle condicional se encarga de cargar los registros desde base de datos, se puede evidenciar la relaciones con cada una de las columnas del archivo "adminSqliteOpenHelper.java
         if (cursor.moveToFirst()){
             do {
                 int id = cursor.getInt(0);
@@ -65,7 +69,9 @@ public class allTareas extends AppCompatActivity {
                 boolean completada = cursor.getInt(6) == 1;
 
                 crearTarjeta (id, nombreActividad, descripcion,fechaLimite, prioridad, categoria, completada);
+            // este while permite navegar entre todos los registros de base de datos
             } while (cursor.moveToNext());
+            // else que se despliega en caso que no existan registros
         } else {
             TextView vacio = new TextView(this);
             vacio.setText("📋 No hay tareas registradas");
@@ -79,7 +85,8 @@ public class allTareas extends AppCompatActivity {
         bd.close();
     }
 
-    // este metodo es necesario para poder visualizar las tareas a través de un elemento tarjeta (de manera similar como las tareas se cargan en la pantalla principal.
+    // este metodo es necesario para poder visualizar las tareas a través de un elemento tarjeta (de manera similar como las tareas se cargan en la pantalla principal)
+    // A difrerencia de otras clases de este archivo, se puede evidenciar el uso de multiples etiquetas de estilo (setTextSize, setOrientation, setpadding, etc)
 
     private void crearTarjeta(int id, String nombre, String descripcion,
                                       String fechaLimite, String prioridad,
