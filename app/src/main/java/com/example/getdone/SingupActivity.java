@@ -31,7 +31,7 @@ public class SingupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_singup);
 
         // Inicializar base de datos (versión 2 para incluir usuarios)
-        dbHelper = new adminSqliteOpenHelper(this, "usuarios", null, 2);
+        dbHelper = new adminSqliteOpenHelper(this, "tareas", null, 2);
 
         // Referenciar campos del layout
         nombreInput = findViewById(R.id.nombre_usuario);

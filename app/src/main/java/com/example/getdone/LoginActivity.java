@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // incializacion del helper de la base de datos
-        dbHelper = new adminSqliteOpenHelper(this, "usuarios", null, 2);
+        dbHelper = new adminSqliteOpenHelper(this, "tareas", null, 2);
 
         // referencia a los campos de entrada para comparar información registrada con datos contenidos en base de datos
         correoInput = findViewById(R.id.correo_usuario);

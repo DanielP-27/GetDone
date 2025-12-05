@@ -3,8 +3,12 @@ package com.example.getdone;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -18,8 +22,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 public class configuracion extends AppCompatActivity {
-    //Creación del canal de notificaciones
+    // Creación del canal de notificaciones
     private static final String CHANNEL_ID = "getDone_canal";
     private static final int NOTIFICATION_ID = 5;
     private static final int REQUEST_NOTIFICATION_PERMISSION = 100;
@@ -28,13 +34,35 @@ public class configuracion extends AppCompatActivity {
     private boolean intentoNotificacionPendiente = false;
     private boolean esActivacion = true;
 
+    // Referencias a campos de entrada
+    private TextInputEditText inputNombre;
+    private TextInputEditText inputCorreo;
+
+    // Base de datos y correo del usuario
+    private adminSqliteOpenHelper admin;
+    private String correoUsuario;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracion);
         bottomMenu.configurar(this, R.id.menu_configuracion);
 
-        // Esta parte del código es necesaria para la solicitud de permisos al dispositivo aplica posterior a Android Tiramisu (13)
+        // Inicializar base de datos (versión 2 - SIN CAMBIOS)
+        admin = new adminSqliteOpenHelper(this, "tareas", null, 2);
+
+        // Obtener correo del usuario logueado desde SharedPreferences
+        SharedPreferences preferences = getSharedPreferences("sesion_getdone", MODE_PRIVATE);
+        correoUsuario = preferences.getString("correo_usuario", "");
+
+        // Referenciar campos
+        inputNombre = findViewById(R.id.input_nombre_usuario);
+        inputCorreo = findViewById(R.id.input_correo_usuario);
+
+        // Cargar datos del usuario desde BD
+        cargarDatosUsuario();
+
+        // Solicitud de permisos para notificaciones (Android 13+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
                     != PackageManager.PERMISSION_GRANTED) {
@@ -44,23 +72,21 @@ public class configuracion extends AppCompatActivity {
             }
         }
 
-        // Esta es la conexión con el switch que se encuentra en activity_configuracion.xml
+        // Conexión con el switch de notificaciones
         switch_notificaciones = findViewById(R.id.configuracion_notificacion);
 
         // Listener para detectar cambios en el Switch
         switch_notificaciones.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // Verificar si tenemos permisos antes de mostrar notificación
+                // Verificar permisos antes de mostrar notificación
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     if (ContextCompat.checkSelfPermission(configuracion.this,
                             android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
 
-                        // Guardar el estado para mostrarlo después de conceder permiso
                         intentoNotificacionPendiente = true;
                         esActivacion = isChecked;
 
-                        // Solicitar permiso
                         ActivityCompat.requestPermissions(configuracion.this,
                                 new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
                                 REQUEST_NOTIFICATION_PERMISSION);
@@ -68,7 +94,6 @@ public class configuracion extends AppCompatActivity {
                     }
                 }
 
-                // Si tenemos permisos o es Android < 13, mostrar notificación directamente
                 if (isChecked) {
                     mostrarNotificacionActivada();
                 } else {
@@ -78,23 +103,46 @@ public class configuracion extends AppCompatActivity {
         });
     }
 
-    // Callback para manejar respuesta de permisos, dependiendo de si el usuario otorga lo permisos o no, se mostrará
-    // el primer mensaje (si concede permisos) o el segundo (en caso que el usuario no los conceda)
+    // Cargar datos del usuario desde la base de datos
+    private void cargarDatosUsuario() {
+        if (correoUsuario.isEmpty()) {
+            Toast.makeText(this, "Error: No se pudo obtener el usuario", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        SQLiteDatabase bd = admin.getReadableDatabase();
+        Cursor cursor = bd.rawQuery(
+                "SELECT nombre, correo FROM usuarios WHERE correo = ?",
+                new String[]{correoUsuario}
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            String nombre = cursor.getString(0);
+            String correo = cursor.getString(1);
+
+            // Establecer valores en los campos
+            inputNombre.setText(nombre != null ? nombre : "");
+            inputCorreo.setText(correo != null ? correo : "");
+
+            cursor.close();
+        } else {
+            Toast.makeText(this, "No se encontraron datos del usuario", Toast.LENGTH_SHORT).show();
+        }
+        bd.close();
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permiso concedido
                 Toast.makeText(this, "✅ Permisos de notificación concedidos", Toast.LENGTH_SHORT).show();
             } else {
-                // Permiso denegado
                 Toast.makeText(this, "⚠️ Permisos denegados.\n" +
                                 "Habilítalos en: Ajustes > Apps > GetDone > Notificaciones",
                         Toast.LENGTH_LONG).show();
 
-                // Resetear el switch a su posición anterior
                 if (switch_notificaciones != null) {
                     switch_notificaciones.setChecked(!esActivacion);
                 }
@@ -104,8 +152,6 @@ public class configuracion extends AppCompatActivity {
         }
     }
 
-    // Si obtenemos permiso por parte del usuario este es el metodo que se activa cuando el usuario activa
-    // las notificaciones a través del switch que se encuentra en activity_configuracion.xml
     private void mostrarNotificacionActivada() {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -114,7 +160,6 @@ public class configuracion extends AppCompatActivity {
             return;
         }
 
-        // Crear canal para Android 8+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,
@@ -125,7 +170,6 @@ public class configuracion extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
 
-        // Construir notificación expandible, a través del elemento NotificationCompact de material design de Google.
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.getdonenb1)
                 .setContentTitle("Notificaciones Activadas")
@@ -138,7 +182,6 @@ public class configuracion extends AppCompatActivity {
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 
-    // Este es el metodo que se activa en el evento que el usuario apague el swicth y por lo tanto, desactiva las notificaciones.
     private void mostrarNotificacionDesactivada() {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -147,7 +190,6 @@ public class configuracion extends AppCompatActivity {
             return;
         }
 
-        // Crear canal para Android 8+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,
@@ -158,7 +200,6 @@ public class configuracion extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
 
-        // Construir notificación expandible, en esta caso cuando se desactivan las notificaciones, elemento NotificationCompact
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.getdonenb1)
                 .setContentTitle("Notificaciones Desactivadas")
@@ -171,9 +212,31 @@ public class configuracion extends AppCompatActivity {
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 
-    // metodos relacionados con los botones crear tarea
+    // Método para actualizar datos del usuario
     public void data_actualizada(View v) {
-        Toast.makeText(this, "Datos actualizados de forma correcta", Toast.LENGTH_LONG).show();
+        // Obtener valor del nombre
+        String nombre = inputNombre.getText().toString().trim();
+
+        // Validación
+        if (nombre.isEmpty()) {
+            inputNombre.setError("El nombre es obligatorio");
+            inputNombre.requestFocus();
+            return;
+        }
+
+        // Actualizar solo el nombre en base de datos
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("nombre", nombre);
+
+        int filasActualizadas = bd.update("usuarios", values, "correo = ?", new String[]{correoUsuario});
+        bd.close();
+
+        if (filasActualizadas > 0) {
+            Toast.makeText(this, "✅ Datos actualizados correctamente", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "❌ Error al actualizar datos", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void volver_activity_main(View v) {

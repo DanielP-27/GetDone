@@ -12,41 +12,43 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
         android:layout_marginTop="17dp"
         android:text="Configuración"
         android:textColor="#D16201"
         android:textSize="22dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/textView17"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="77dp"
+        android:layout_marginTop="32dp"
         android:text="Nombre Usuario"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout5"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
-        android:layout_marginEnd="7dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView17">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_nombre_usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Angel Daniel Pineda Blanco"
+            android:hint="Ingrese su nombre"
             android:textColor="#FBFBFB"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -55,126 +57,50 @@
         android:id="@+id/textView22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="16dp"
-        android:text="Correo Electronico"
+        android:layout_marginTop="24dp"
+        android:text="Correo Electrónico"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout6"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
-        android:layout_marginEnd="9dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView22">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_correo_usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="elbarto1@correo.com"
+            android:enabled="false"
+            android:hint="correo@ejemplo.com"
             android:textColor="@color/white"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="30dp"
-        android:text="Numero Telefonico"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout6" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout7"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView23">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="1234567890"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/textView24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginBottom="7dp"
-        android:text="Pais"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout8"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout8" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout8"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="España"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/textView25"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="7dp"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
 
         <TextView
             android:id="@+id/textView27"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Activar/desactivar notificaciones"
@@ -185,28 +111,27 @@
         <Switch
             android:id="@+id/configuracion_notificacion"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginBottom="171dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <TextView
             android:id="@+id/textView28"
-            android:layout_width="180dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="activar/desactivar vibraciones diferenciadas por categoría"
+            android:text="Activar/desactivar vibraciones diferenciadas por categoría"
             android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -215,48 +140,47 @@
             android:id="@+id/configuracion_vibracion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
-
     </LinearLayout>
 
     <Button
         android:id="@+id/boton_actualiza_novedad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="51dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="#D16201"
         android:onClick="data_actualizada"
         android:text="Actualizar"
         android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toStartOf="@+id/boton_cancela_novedad"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <Button
         android:id="@+id/boton_cancela_novedad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="69dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="#D16201"
         android:onClick="volver_activity_main"
         android:text="Cancelar"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/menu_navegacion"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/boton_actualiza_novedad"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menu_navegacion"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:background="#5F101010"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
         app:itemTextColor="#ffffff"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_menu" />
 
