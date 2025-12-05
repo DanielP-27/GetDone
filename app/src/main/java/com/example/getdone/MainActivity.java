@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Variable para inicializar BD
-        admin = new adminSqliteOpenHelper(this, "tareas", null, 1);
+        admin = new adminSqliteOpenHelper(this, "tareas", null, 2);
 
         contenedorTareasProximas = findViewById(R.id.card_actividades1);
 

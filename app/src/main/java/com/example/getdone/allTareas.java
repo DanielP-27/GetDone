@@ -45,7 +45,7 @@ public class allTareas extends AppCompatActivity {
         });
 
         // variables necesarias para que el onCreate pueda conectar con BD y buscar tareas con id
-        admin = new adminSqliteOpenHelper(this, "tareas", null, 1);
+        admin = new adminSqliteOpenHelper(this, "tareas", null, 2);
         contenedorTareas = findViewById(R.id.contenedor_tareas);
         cargarTodasLasTareas();
     }

@@ -26,6 +26,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import android.app.DatePickerDialog;
+import android.widget.DatePicker;
+import com.google.android.material.textfield.TextInputEditText;
+import java.util.Calendar;
+
 
 public class new_Task extends AppCompatActivity {
 
@@ -34,7 +39,8 @@ public class new_Task extends AppCompatActivity {
     private static final int CAPTURA_IMAGEN = 1;
 
     private ImageView fotoViewer;
-    private EditText etnombreActividad, etdescripcion, etfechaLimite, etprioridad, etcategoria;
+    private EditText etnombreActividad, etdescripcion, etprioridad, etcategoria;
+    private TextInputEditText etfechaLimite;
     private adminSqliteOpenHelper admin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +57,23 @@ public class new_Task extends AppCompatActivity {
         // Este apartado del código ha sido modificado respecto de la fase 3; en la cual solo se contaba con el código para que el service de camara funcionara; ahora se crea la estructura de conexión con la BD
 
         // inicizalización de la base de datos
-        admin = new adminSqliteOpenHelper(this, "tareas", null, 1);
+        admin = new adminSqliteOpenHelper(this, "tareas", null, 2);
 
         etnombreActividad = findViewById(R.id.nombre_actividad);
         etdescripcion = findViewById(R.id.descripcion_actividad);
         etfechaLimite = findViewById(R.id.fecha_actividad);
         etprioridad = findViewById(R.id.prioridad_actividad);
         etcategoria = findViewById(R.id.categoria_actividad);
+
+        // Configurar DatePicker para fecha
+        etfechaLimite.setFocusable(false);
+        etfechaLimite.setClickable(true);
+        etfechaLimite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarDatePicker();
+            }
+        });
 
 
         fotoViewer = findViewById(R.id.foto_viewer);
@@ -166,4 +182,33 @@ public class new_Task extends AppCompatActivity {
         fotoViewer.setImageDrawable(null);
         fotoViewer.setVisibility(View.GONE);
     }
+
+    private void mostrarDatePicker() {
+        // Obtener fecha actual
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        // Crear DatePickerDialog
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Formatear fecha: dd/mm/yyyy
+                        String fechaSeleccionada = String.format("%02d/%02d/%04d",
+                                dayOfMonth, month + 1, year);
+                        etfechaLimite.setText(fechaSeleccionada);
+                    }
+                },
+                year, month, day
+        );
+
+        // Opcional: establecer fecha mínima (hoy)
+        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+
+        datePickerDialog.show();
+    }
+
 }

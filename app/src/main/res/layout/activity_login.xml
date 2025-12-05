@@ -71,7 +71,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/correo_layout"
         android:layout_width="254dp"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:layout_marginBottom="56dp"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +103,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_layout"
         android:layout_width="254dp"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_marginBottom="48dp"
         app:layout_constraintBottom_toTopOf="@+id/boton_login"
         app:layout_constraintEnd_toEndOf="parent"
@@ -113,7 +113,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password_usuario"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
+            android:inputType="textPassword"
             android:hint="Ingrese su contraseña" />
     </com.google.android.material.textfield.TextInputLayout>
 

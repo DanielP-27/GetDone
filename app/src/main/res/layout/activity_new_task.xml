@@ -256,6 +256,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="11dp"
         android:layout_marginEnd="50dp"
+        app:endIconMode="custom"
+        app:endIconDrawable="@android:drawable/ic_menu_my_calendar"
         app:layout_constraintEnd_toStartOf="@+id/boton_agregar_archivo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11">
@@ -264,7 +266,9 @@
             android:id="@+id/fecha_actividad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="formato dd/mm/aa"
+            android:hint="Seleccione fecha"
+            android:focusable="false"
+            android:clickable="true"
             android:textColor="@color/white"
             android:textColorHint="#FFFFFF" />
     </com.google.android.material.textfield.TextInputLayout>

@@ -52,7 +52,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nuevoCorreo_layout"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/textView5"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +62,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nuevo_correo"
             android:layout_width="250dp"
-            android:layout_height="40dp" />
+            android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -81,7 +81,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nuevoPassword_layout"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginBottom="17dp"
         app:layout_constraintBottom_toTopOf="@+id/checkBox3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +91,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nuevo_password"
             android:layout_width="250dp"
-            android:layout_height="40dp" />
+            android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -110,7 +110,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nombresApellidos_layout"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginStart="75dp"
         android:layout_marginEnd="75dp"
         android:layout_marginBottom="12dp"
@@ -122,7 +122,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nombre_usuario"
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
