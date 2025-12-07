@@ -48,7 +48,8 @@ public class adminSqliteOpenHelper extends SQLiteOpenHelper {
 
     //Los metodos que se encuentran a continuación son necearios para la poder registrar nuevos usuarios de manera exitosa; además, se utilizan para verificar usuarios existentes para el login
 
-    // Meotodo para el registro de nuevos usuarios
+    // Meotodo para el registro de nuevos usuarios, se accede a la tabla "usuarios" de la base de datos en modo escritura (getWritableDatabase)
+    // con los metodos put se añaden los datos ingresados por el usuario en los atributos
     public boolean registrarUsuario(String correo, String password, String nombre) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

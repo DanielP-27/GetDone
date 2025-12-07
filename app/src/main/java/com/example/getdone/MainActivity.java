@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void cargarTareas(){
 
-        Log.d("DEBUG_TAREAS", "Método cargarTareas() iniciado");
 
         contenedorTareasProximas.removeAllViews();
         

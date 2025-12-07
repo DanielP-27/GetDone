@@ -48,10 +48,10 @@ public class configuracion extends AppCompatActivity {
         setContentView(R.layout.activity_configuracion);
         bottomMenu.configurar(this, R.id.menu_configuracion);
 
-        // Inicializar base de datos (versión 2 - SIN CAMBIOS)
+        // Inicializar base de datos
         admin = new adminSqliteOpenHelper(this, "tareas", null, 2);
 
-        // Obtener correo del usuario logueado desde SharedPreferences
+        // Obtener correo del usuario logueado desde SharedPreferences (en este caso, es un archivo local xlm. que almacena en el dispositivo datos en modo clave:valor)
         SharedPreferences preferences = getSharedPreferences("sesion_getdone", MODE_PRIVATE);
         correoUsuario = preferences.getString("correo_usuario", "");
 
@@ -212,7 +212,7 @@ public class configuracion extends AppCompatActivity {
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 
-    // Método para actualizar datos del usuario
+    // Metodo para actualizar datos del usuario
     public void data_actualizada(View v) {
         // Obtener valor del nombre
         String nombre = inputNombre.getText().toString().trim();
@@ -224,7 +224,7 @@ public class configuracion extends AppCompatActivity {
             return;
         }
 
-        // Actualizar solo el nombre en base de datos
+        // Actualiza la información modificada por el usuario, en este caso, solo se ha configurado para modificar el nombre, una versión final de la aplicación permitir la actualización total de los datos del usuario
         SQLiteDatabase bd = admin.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("nombre", nombre);
@@ -242,5 +242,19 @@ public class configuracion extends AppCompatActivity {
     public void volver_activity_main(View v) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    public void cerrarSesion(View v) {
+        // Limpiar SharedPreferences (eliminar sesión)
+        SharedPreferences preferences = getSharedPreferences("sesion_getdone", MODE_PRIVATE);
+        preferences.edit().clear().apply();
+
+        Toast.makeText(this, "Sesión cerrada correctamente", Toast.LENGTH_SHORT).show();
+
+        // Volver a LoginActivity y limpiar stack de activities
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 }

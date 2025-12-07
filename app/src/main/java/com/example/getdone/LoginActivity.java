@@ -16,7 +16,8 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity {
 
-    // se crean clases privadas para el manejo de los campos correo y contraseña en Login para manejo desde base de datos
+    // se crean clases privadas para el manejo de los campos correo y contraseña en Login para manejo y manipulación de datos directamente desde base de datos
+
     private TextInputEditText correoInput;
     private TextInputEditText passwordInput;
     private adminSqliteOpenHelper dbHelper;
@@ -43,11 +44,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void ir_activity_main(View v) {
-        // Obtener los valores de los campos
+        // Con estas variables obtiene los datos ingresados por el usuario para su validación con datos registrados en base de datos
         String correo = correoInput.getText().toString().trim();
         String password = passwordInput.getText().toString().trim();
 
-        // Validar que los campos no estén vacíos
+        // con las dos estructuras condicionales siguientes se validan que no los campos usuario y contraseña no esten vacios
         if (correo.isEmpty()) {
             correoInput.setError("Ingrese su correo electrónico");
             correoInput.requestFocus();
@@ -60,16 +61,16 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Validar formato de correo básico
+        // Condicional para validar que el correo ingresado cumpla con los requerimientos establecidos en este if (el correo debe contar con @ y .)
         if (!correo.contains("@") || !correo.contains(".")) {
             correoInput.setError("Correo electrónico inválido");
             correoInput.requestFocus();
             return;
         }
 
-        // Validar credenciales con la base de datos
+        // Esta estructura condicional valida los datos ingresados por el usuario en los campos correspondientes y los compara con los datos ya registrados en base de datos, se llama al metodo validarUsuario desde adminSqliteOpenHelper
         if (dbHelper.validarUsuario(correo, password)) {
-            // Login exitoso - guardar sesión
+
             guardarSesion(correo);
 
             Toast.makeText(this, "Bienvenido a GetDone", Toast.LENGTH_SHORT).show();

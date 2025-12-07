@@ -30,7 +30,7 @@ public class SingupActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_singup);
 
-        // Inicializar base de datos (versión 2 para incluir usuarios)
+        // Inicializar base de datos (ahora es version 2 y no 1 por que fue necesario modificar la base de datos para añadir tabla usuarios)
         dbHelper = new adminSqliteOpenHelper(this, "tareas", null, 2);
 
         // Referenciar campos del layout
@@ -99,7 +99,7 @@ public class SingupActivity extends AppCompatActivity {
             return;
         }
 
-        // Intentar registrar el usuario
+        // ILogica del registro de usuario
         if (dbHelper.registrarUsuario(correo, password, nombre)) {
             Toast.makeText(this, "¡Cuenta creada con éxito! Ahora puedes iniciar sesión", Toast.LENGTH_LONG).show();
 
